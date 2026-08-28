@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Buttons</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #fcfbf9;
+            color: #1c1c1e;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .btn {
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid #e5e5ea;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .btn-black {
+            background-color: #1c1c1e;
+            color: #ffffff;
+            border-color: #1c1c1e;
+        }
+
+        .btn-black:hover {
+            background-color: #3a3a3c;
+        }
+
+        .btn-black:disabled {
+            background-color: #11111b;
+            border-color: #e5e5ea;
+            color: #8e8e93;
+            cursor: not-allowed;
+        }
+
+        .btn-link {
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        /* Topo */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            color: #8e8e93;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            background: #ffffff;
+            border: 1px dashed #e5e5ea;
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .empty-icon {
+            font-size: 2.5rem;
+            color: #c7c7cc;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            color: #8e8e93;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        /* Grid de Looks */
+        .grid-looks {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card-look {
+            background: #ffffff;
+            border: 1px solid #e5e5ea;
+            border-radius: 12px;
+            padding: 12px;
+            position: relative;
+        }
+
+        .preview-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            height: 180px;
+            background: #f2f2f7;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            padding: 6px;
+        }
+
+        .preview-mini-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .look-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .look-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .look-sub {
+            font-size: 0.75rem;
+            color: #8e8e93;
+        }
+
+        .btn-delete {
+            border: none;
+            background: none;
+            color: #c7c7cc;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-delete:hover {
+            color: #ff3b30;
+        }
+
+        /* Layout de Criar Look */
+        .alert-warning {
+            background-color: #fff9e6;
+            border: 1px solid #ffe599;
+            color: #b78103;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .look-builder {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 20px;
+        }
+
+        .builder-header {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .input-name {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid #e5e5ea;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .drop-zone {
+            border: 2px dashed #e5e5ea;
+            border-radius: 12px;
+            min-height: 320px;
+            background: #ffffff;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 15px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .drop-zone-empty {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #8e8e93;
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
+        .selected-item {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            position: relative;
+            border: 1px solid #e5e5ea;
+            overflow: hidden;
+            background: #f2f2f7;
+        }
+
+        .selected-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-item-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Sidebar de Peças do Armário */
+        .sidebar-pecas {
+            background: #ffffff;
+            border: 1px solid #e5e5ea;
+            border-radius: 12px;
+            padding: 15px;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .sidebar-pecas h4 {
+            font-size: 0.85rem;
+            color: #8e8e93;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .peca-draggable {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border: 1px solid #e5e5ea;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: grab;
+            background: #ffffff;
+        }
+
+        .peca-draggable img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #f2f2f7;
+        }
+
+        .peca-draggable-info {
+            font-size: 0.8rem;
+        }
+
+        .peca-draggable-info div {
+            font-weight: 600;
+        }
+
+        .peca-draggable-info span {
+            color: #8e8e93;
+            font-size: 0.75rem;
+        }
+
+        .bg-gradient-primary {
+            background-color: #000;
+            background-image: linear-gradient(180deg, #000 10%, #000 100%);
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i>☰</i>
+                </div>
+                <div class="sidebar-brand-text mx-3">MENU</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="home.html">
+                    <span>Guarda-roupa</span></a>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item active">
+                <a class="nav-link" href="looks.html">
+                    <span>Looks</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="sudokus.html">
+                    <span>Sudokus</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="info.html">
+                    <span>Mais info</span></a>
+            </li>
+
+
+
+
+
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group"> STYLIST
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+
+
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <img class="img-profile rounded-circle" src="https://thumbs.dreamstime.com/b/linha-%C3%ADcone-do-preto-avatar-perfil-de-usu%C3%A1rio-121102131.jpg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container">
+
+                    <!-- TELA 1: LISTA DE LOOKS -->
+                    <div id="telaLooks">
+                        <div class="header">
+                            <div>
+                                <h1>Looks</h1>
+                                <p>Suas combinações salvas</p>
+                            </div>
+                            <button class="btn btn-black" onclick="abrirCriarLook()">+ Criar Novo Look</button>
+                        </div>
+
+                        <div id="gridLooks" class="grid-looks"></div>
+
+                        <div id="emptyStateLooks" class="empty-state">
+                            <div class="empty-icon"><i class="fas fa-sparkles"></i></div>
+                            <p>Nenhum look salvo ainda.<br>Monte sua primeira combinação de roupas.</p>
+                            <button class="btn btn-black" onclick="abrirCriarLook()">+ Criar Novo Look</button>
+                        </div>
+                    </div>
+
+                    <!-- TELA 2: CRIAR NOVO LOOK -->
+                    <div id="telaCriarLook" class="hidden">
+                        <button class="btn-link" onclick="fecharCriarLook()"><i class="fas fa-arrow-left"></i> Voltar
+                            aos looks</button>
+
+                        <h2 style="margin-bottom: 20px;">Criar Novo Look</h2>
+
+                        <div id="alertaAviso" class="alert-warning hidden">
+                            Você precisa de pelo menos 2 peças no armário para montar looks.
+                        </div>
+
+                        <div class="builder-header">
+                            <input type="text" id="nomeLook" class="input-text input-name" placeholder="Nome do look"
+                                oninput="validarFormularioLook()">
+                            <button id="btnSalvarLook" class="btn btn-black" onclick="salvarLook()" disabled><i
+                                    class="fas fa-bookmark"></i> Salvar Look</button>
+                        </div>
+                        <p style="font-size: 0.75rem; color: #8e8e93; margin-top: -12px; margin-bottom: 20px;">Mínimo de
+                            2 peças e um nome para salvar.</p>
+
+                        <div class="look-builder">
+                            <!-- Área Visual de Seleção -->
+                            <div class="drop-zone" id="dropZone" ondragover="permitirSoltar(event)"
+                                ondrop="soltarPeca(event)">
+                                <div id="dropZoneEmpty" class="drop-zone-empty">
+                                    <i class="fas fa-sparkles fa-lg" style="margin-bottom: 8px;"></i><br>
+                                    Arraste peças da barra lateral para compor seu look
+                                </div>
+                            </div>
+
+                            <!-- Lista Lateral de Peças Disponíveis -->
+                            <div class="sidebar-pecas">
+                                <h4>Peças do armário</h4>
+                                <div id="listaPecasArmario"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+</body>
+<script>
+    // Dados do LocalStorage
+    let pecasArmario = JSON.parse(localStorage.getItem('minhasPecas')) || [];
+    let looksSalvos = JSON.parse(localStorage.getItem('meusLooks')) || [];
+    let pecasSelecionadasNoLook = [];
+
+    document.addEventListener('DOMContentLoaded', renderizarLooks);
+
+    function abrirCriarLook() {
+        pecasSelecionadasNoLook = [];
+        document.getElementById('nomeLook').value = '';
+        document.getElementById('telaLooks').classList.add('hidden');
+        document.getElementById('telaCriarLook').classList.remove('hidden');
+
+        const alerta = document.getElementById('alertaAviso');
+        if (pecasArmario.length < 2) {
+            alerta.classList.remove('hidden');
+        } else {
+            alerta.classList.add('hidden');
+        }
+
+        renderizarSidebarPecas();
+        atualizarDropZone();
+        validarFormularioLook();
+    }
+
+    function fecharCriarLook() {
+        document.getElementById('telaCriarLook').classList.add('hidden');
+        document.getElementById('telaLooks').classList.remove('hidden');
+    }
+
+    // Renderiza a lista lateral com as peças do Guarda-Roupa
+    function renderizarSidebarPecas() {
+        const container = document.getElementById('listaPecasArmario');
+        container.innerHTML = '';
+
+        if (pecasArmario.length === 0) {
+            container.innerHTML = '<p style="font-size: 0.8rem; color: #8e8e93;">Nenhuma peça cadastrada.</p>';
+            return;
+        }
+
+        pecasArmario.forEach(peca => {
+            const item = document.createElement('div');
+            item.className = 'peca-draggable';
+            item.draggable = true;
+            item.ondragstart = (e) => e.dataTransfer.setData('text/plain', peca.id);
+            item.onclick = () => adicionarPecaAoLook(peca.id);
+
+            item.innerHTML = `
+                    <img src="${peca.imagem}" alt="${peca.nome}">
+                    <div class="peca-draggable-info">
+                        <div>${peca.nome}</div>
+                        <span>${peca.cor || ''} • ${peca.tipo || ''}</span>
+                    </div>
+                `;
+            container.appendChild(item);
+        });
+    }
+
+    // Drag and Drop
+    function permitirSoltar(e) { e.preventDefault(); }
+
+    function soltarPeca(e) {
+        e.preventDefault();
+        const pecaId = e.dataTransfer.getData('text/plain');
+        if (pecaId) adicionarPecaAoLook(Number(pecaId));
+    }
+
+    function adicionarPecaAoLook(id) {
+        const peca = pecasArmario.find(p => p.id === id);
+        if (peca && !pecasSelecionadasNoLook.some(p => p.id === id)) {
+            pecasSelecionadasNoLook.push(peca);
+            atualizarDropZone();
+            validarFormularioLook();
+        }
+    }
+
+    function removerPecaDoLook(id) {
+        pecasSelecionadasNoLook = pecasSelecionadasNoLook.filter(p => p.id !== id);
+        atualizarDropZone();
+        validarFormularioLook();
+    }
+
+    function atualizarDropZone() {
+        const dropZone = document.getElementById('dropZone');
+        const emptyText = document.getElementById('dropZoneEmpty');
+
+        // Limpa elementos selecionados mantendo a mensagem de fundo
+        const cards = dropZone.querySelectorAll('.selected-item');
+        cards.forEach(c => c.remove());
+
+        if (pecasSelecionadasNoLook.length === 0) {
+            emptyText.classList.remove('hidden');
+        } else {
+            emptyText.classList.add('hidden');
+            pecasSelecionadasNoLook.forEach(peca => {
+                const card = document.createElement('div');
+                card.className = 'selected-item';
+                card.innerHTML = `
+                        <img src="${peca.imagem}" alt="${peca.nome}">
+                        <button class="remove-item-btn" onclick="removerPecaDoLook(${peca.id})"><i class="fas fa-times"></i></button>
+                    `;
+                dropZone.appendChild(card);
+            });
+        }
+    }
+
+    function validarFormularioLook() {
+        const nome = document.getElementById('nomeLook').value.trim();
+        const btnSalvar = document.getElementById('btnSalvarLook');
+
+        if (nome.length > 0 && pecasSelecionadasNoLook.length >= 2) {
+            btnSalvar.disabled = false;
+        } else {
+            btnSalvar.disabled = true;
+        }
+    }
+
+    function salvarLook() {
+        const nome = document.getElementById('nomeLook').value.trim();
+        if (!nome || pecasSelecionadasNoLook.length < 2) return;
+
+        const novoLook = {
+            id: Date.now(),
+            nome: nome,
+            pecas: pecasSelecionadasNoLook
+        };
+
+        looksSalvos.push(novoLook);
+        localStorage.setItem('meusLooks', JSON.stringify(looksSalvos));
+
+        fecharCriarLook();
+        renderizarLooks();
+    }
+
+    function excluirLook(id) {
+        looksSalvos = looksSalvos.filter(l => l.id !== id);
+        localStorage.setItem('meusLooks', JSON.stringify(looksSalvos));
+        renderizarLooks();
+    }
+
+    function renderizarLooks() {
+        const grid = document.getElementById('gridLooks');
+        const emptyState = document.getElementById('emptyStateLooks');
+
+        grid.innerHTML = '';
+
+        if (looksSalvos.length === 0) {
+            emptyState.classList.remove('hidden');
+            grid.classList.add('hidden');
+        } else {
+            emptyState.classList.add('hidden');
+            grid.classList.remove('hidden');
+
+            looksSalvos.forEach(look => {
+                const miniImagens = look.pecas.slice(0, 4).map(p => `<img src="${p.imagem}">`).join('');
+
+                grid.innerHTML += `
+                        <div class="card-look">
+                            <div class="preview-mini-grid">
+                                ${miniImagens}
+                            </div>
+                            <div class="look-info">
+                                <div>
+                                    <div class="look-title">${look.nome}</div>
+                                    <div class="look-sub">${look.pecas.length} peças</div>
+                                </div>
+                                <button class="btn-delete" onclick="excluirLook(${look.id})"><i class="far fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    `;
+            });
+        }
+    }
+</script>
+
+</html>

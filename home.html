@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <style>
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #fcfbf9;
+            color: #1c1c1e;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Utilidades */
+        .hidden {
+            display: none !important;
+        }
+
+        .btn {
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid #e5e5ea;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .btn-black {
+            background-color: #1c1c1e;
+            color: #ffffff;
+            border-color: #1c1c1e;
+        }
+
+        .btn-black:hover {
+            background-color: #3a3a3c;
+        }
+
+        .btn-link {
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        /* Tela do Armário */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            color: #8e8e93;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .filters-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-label {
+            color: #8e8e93;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 10px;
+        }
+
+        .pill-btn {
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            border: 1px solid #e5e5ea;
+            background: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pill-btn.active {
+            background: #1c1c1e;
+            color: #ffffff;
+            border-color: #1c1c1e;
+        }
+
+        .color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Empty State */
+        .empty-state {
+            background: #ffffff;
+            border: 1px dashed #e5e5ea;
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .empty-icon {
+            font-size: 2.5rem;
+            color: #c7c7cc;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            color: #8e8e93;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        /* Grid de Peças */
+        .grid-pecas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card-peca {
+            background: #ffffff;
+            border: 1px solid #e5e5ea;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: #f2f2f7;
+        }
+
+        .card-info {
+            padding: 12px;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .card-sub {
+            font-size: 0.75rem;
+            color: #8e8e93;
+            margin-top: 2px;
+        }
+
+        .card-actions {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .card-peca:hover .card-actions {
+            opacity: 1;
+        }
+
+        /* Formulario Adicionar Peça */
+        .form-container {
+            max-width: 600px;
+        }
+
+        .upload-area {
+            border: 2px dashed #e5e5ea;
+            border-radius: 12px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .upload-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .upload-placeholder {
+            text-align: center;
+            color: #8e8e93;
+            font-size: 0.85rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .input-text {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #e5e5ea;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .bg-gradient-primary {
+            background-color: #000;
+            background-image: linear-gradient(180deg, #000 10%, #000 100%);
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i>☰</i>
+                </div>
+                <div class="sidebar-brand-text mx-3">MENU</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="home.html">
+                    <span>Guarda-roupa</span></a>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item active">
+                <a class="nav-link" href="looks.html">
+                    <span>Looks</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="sudokus.html">
+                    <span>Sudokus</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="info.html">
+                    <span>Mais info</span></a>
+            </li>
+
+
+
+
+
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group"> STYLIST
+                            <!-- <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div> -->
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+
+
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <img class="img-profile rounded-circle" src="https://thumbs.dreamstime.com/b/linha-%C3%ADcone-do-preto-avatar-perfil-de-usu%C3%A1rio-121102131.jpg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container">
+
+                    <!-- TELA 1: MEU ARMÁRIO -->
+                    <div id="telaArmario">
+                        <div class="header">
+                            <div>
+                                <h1>Meu Armário</h1>
+                                <p id="contadorPecas">0 peças cadastradas</p>
+                            </div>
+                            <button class="btn btn-black" onclick="abrirFormulario()">+ Adicionar Peça</button>
+                        </div>
+
+                        <!-- Filtros de Cores e Categorias -->
+                        <div class="filters-section">
+                            <div class="filter-row">
+                                <span class="filter-label"><i class="fas fa-sliders-h"></i> Filtros:</span>
+                                <button class="pill-btn active"><span class="color-dot"
+                                        style="background: linear-gradient(45deg, red, blue, yellow)"></span> Todas
+                                    cores</button>
+                                <button class="pill-btn"><span class="color-dot" style="background:#000"></span>
+                                    Preto</button>
+                                <button class="pill-btn"><span class="color-dot" style="background:#fff"></span>
+                                    Branco</button>
+                                <button class="pill-btn"><span class="color-dot" style="background:#8e8e93"></span>
+                                    Cinza</button>
+                                <button class="pill-btn"><span class="color-dot" style="background:#007aff"></span>
+                                    Azul</button>
+                                <button class="pill-btn"><span class="color-dot" style="background:#ff3b30"></span>
+                                    Vermelho</button>
+                            </div>
+
+                            <div class="filter-row">
+                                <button class="pill-btn active">Todas categorias</button>
+                                <button class="pill-btn">Casual</button>
+                                <button class="pill-btn">Gala</button>
+                                <button class="pill-btn">Trabalho</button>
+                                <button class="pill-btn">Esportivo</button>
+                                <button class="pill-btn">Social</button>
+                            </div>
+                        </div>
+
+                        <!-- Lista de Peças -->
+                        <div id="gridPecas" class="grid-pecas"></div>
+
+                        <!-- Estado Vazio -->
+                        <div id="emptyState" class="empty-state">
+                            <div class="empty-icon"><i class="fas fa-tshirt"></i></div>
+                            <p>Seu armário está vazio.<br>Clique no botão 'Adicionar Peça' para cadastrar sua primeira
+                                roupa!</p>
+                            <button class="btn btn-black" onclick="abrirFormulario()">+ Adicionar Peça</button>
+                        </div>
+                    </div>
+
+                    <!-- TELA 2: ADICIONAR PEÇA -->
+                    <div id="telaFormulario" class="form-container hidden">
+                        <button class="btn-link" onclick="fecharFormulario()"><i class="fas fa-arrow-left"></i> Voltar
+                            ao armário</button>
+
+                        <h2 style="margin-bottom: 20px;">Adicionar Peça</h2>
+
+                        <form id="formPeca">
+                            <div class="form-group">
+                                <label>Foto da peça *</label>
+                                <div class="upload-area" onclick="document.getElementById('inputFoto').click()">
+                                    <div id="uploadPlaceholder" class="upload-placeholder">
+                                        <i class="fas fa-upload fa-lg" style="margin-bottom: 8px;"></i><br>
+                                        Clique para enviar uma foto
+                                    </div>
+                                    <img id="previewFoto" class="hidden" alt="Prévia">
+                                </div>
+                                <input type="file" id="inputFoto" accept="image/*" class="hidden"
+                                    onchange="processarImagem(event)" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nome (opcional)</label>
+                                <input type="text" id="nomePeca" class="input-text"
+                                    placeholder="Ex: Camisa branca de algodão">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Cor *</label>
+                                <div class="radio-group">
+                                    <button type="button" class="pill-btn color-option active" data-color="Branco"
+                                        onclick="selecionarCor(this)"><span class="color-dot"
+                                            style="background:#fff"></span> Branco</button>
+                                    <button type="button" class="pill-btn color-option" data-color="Preto"
+                                        onclick="selecionarCor(this)"><span class="color-dot"
+                                            style="background:#000"></span> Preto</button>
+                                    <button type="button" class="pill-btn color-option" data-color="Cinza"
+                                        onclick="selecionarCor(this)"><span class="color-dot"
+                                            style="background:#8e8e93"></span> Cinza</button>
+                                    <button type="button" class="pill-btn color-option" data-color="Azul"
+                                        onclick="selecionarCor(this)"><span class="color-dot"
+                                            style="background:#007aff"></span> Azul</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Categoria (estilo) *</label>
+                                <div class="radio-group">
+                                    <button type="button" class="pill-btn cat-option active" data-cat="Casual"
+                                        onclick="selecionarCategoria(this)">Casual</button>
+                                    <button type="button" class="pill-btn cat-option" data-cat="Gala"
+                                        onclick="selecionarCategoria(this)">Gala</button>
+                                    <button type="button" class="pill-btn cat-option" data-cat="Trabalho"
+                                        onclick="selecionarCategoria(this)">Trabalho</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tipo (parte do corpo)</label>
+                                <div class="radio-group">
+                                    <button type="button" class="pill-btn tipo-option active" data-tipo="Superior"
+                                        onclick="selecionarTipo(this)">Superior</button>
+                                    <button type="button" class="pill-btn tipo-option" data-tipo="Inferior"
+                                        onclick="selecionarTipo(this)">Inferior</button>
+                                    <button type="button" class="pill-btn tipo-option" data-tipo="Calçado"
+                                        onclick="selecionarTipo(this)">Calçado</button>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 10px; margin-top: 30px;">
+                                <button type="submit" class="btn btn-black">Salvar Peça</button>
+                                <button type="button" class="btn" onclick="fecharFormulario()">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="index.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
+</body>
+<script>
+    // Estado da aplicação
+    let pecas = JSON.parse(localStorage.getItem('minhasPecas')) || [];
+    let imagemBase64Temp = '';
+    let corSelecionada = 'Branco';
+    let categoriaSelecionada = 'Casual';
+    let tipoSelecionado = 'Superior';
+
+    // Estado dos Filtros Ativos
+    let filtroCorAtivo = 'Todas';
+    let filtroCategoriaAtiva = 'Todas';
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+        configurarEventosFiltros();
+        renderizarArmario();
+    });
+
+    function abrirFormulario() {
+        document.getElementById('telaArmario').classList.add('hidden');
+        document.getElementById('telaFormulario').classList.remove('hidden');
+    }
+
+    function fecharFormulario() {
+        document.getElementById('formPeca').reset();
+        document.getElementById('previewFoto').classList.add('hidden');
+        document.getElementById('uploadPlaceholder').classList.remove('hidden');
+        imagemBase64Temp = '';
+        document.getElementById('telaFormulario').classList.add('hidden');
+        document.getElementById('telaArmario').classList.remove('hidden');
+    }
+
+    // Processar Imagem para Base64
+    function processarImagem(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                imagemBase64Temp = event.target.result;
+                const imgPreview = document.getElementById('previewFoto');
+                imgPreview.src = imagemBase64Temp;
+                imgPreview.classList.remove('hidden');
+                document.getElementById('uploadPlaceholder').classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Seleção de opções dentro do Formulário
+    function selecionarCor(el) {
+        document.querySelectorAll('.color-option').forEach(btn => btn.classList.remove('active'));
+        el.classList.add('active');
+        corSelecionada = el.getAttribute('data-color');
+    }
+
+    function selecionarCategoria(el) {
+        document.querySelectorAll('.cat-option').forEach(btn => btn.classList.remove('active'));
+        el.classList.add('active');
+        categoriaSelecionada = el.getAttribute('data-cat');
+    }
+
+    function selecionarTipo(el) {
+        document.querySelectorAll('.tipo-option').forEach(btn => btn.classList.remove('active'));
+        el.classList.add('active');
+        tipoSelecionado = el.getAttribute('data-tipo');
+    }
+
+    // Configuração dos cliques nos botões da tela inicial
+    function configurarEventosFiltros() {
+        const linhasFiltro = document.querySelectorAll('.filters-section .filter-row');
+
+        // Linha 1: Filtros de Cor
+        linhasFiltro[0].querySelectorAll('.pill-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                linhasFiltro[0].querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const texto = btn.innerText.trim();
+                filtroCorAtivo = texto.includes('Todas') ? 'Todas' : texto;
+                renderizarArmario();
+            });
+        });
+
+        // Linha 2: Filtros de Categoria
+        linhasFiltro[1].querySelectorAll('.pill-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                linhasFiltro[1].querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const texto = btn.innerText.trim();
+                filtroCategoriaAtiva = texto.includes('Todas') ? 'Todas' : texto;
+                renderizarArmario();
+            });
+        });
+    }
+
+    // Salvar Peça
+    document.getElementById('formPeca').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!imagemBase64Temp) {
+            alert('Por favor, adicione uma foto da peça.');
+            return;
+        }
+
+        const novaPeca = {
+            id: Date.now(),
+            nome: document.getElementById('nomePeca').value || 'Sem Nome',
+            imagem: imagemBase64Temp,
+            cor: corSelecionada,
+            categoria: categoriaSelecionada,
+            tipo: tipoSelecionado
+        };
+
+        pecas.push(novaPeca);
+        localStorage.setItem('minhasPecas', JSON.stringify(pecas));
+
+        fecharFormulario();
+        renderizarArmario();
+    });
+
+    // Deletar Peça
+    function excluirPeca(id) {
+        pecas = pecas.filter(p => p.id !== id);
+        localStorage.setItem('minhasPecas', JSON.stringify(pecas));
+        renderizarArmario();
+    }
+
+    // Renderizar Lista com Filtragem
+    function renderizarArmario() {
+        const grid = document.getElementById('gridPecas');
+        const emptyState = document.getElementById('emptyState');
+        const contador = document.getElementById('contadorPecas');
+
+        // Filtragem dos dados armazenados
+        const pecasFiltradas = pecas.filter(peca => {
+            const bateuCor = filtroCorAtivo === 'Todas' || peca.cor.toLowerCase() === filtroCorAtivo.toLowerCase();
+            const bateuCategoria = filtroCategoriaAtiva === 'Todas' || peca.categoria.toLowerCase() === filtroCategoriaAtiva.toLowerCase();
+            return bateuCor && bateuCategoria;
+        });
+
+        contador.innerText = `${pecasFiltradas.length} peças encontradas (${pecas.length} no total)`;
+        grid.innerHTML = '';
+
+        if (pecasFiltradas.length === 0) {
+            emptyState.classList.remove('hidden');
+            grid.classList.add('hidden');
+        } else {
+            emptyState.classList.add('hidden');
+            grid.classList.remove('hidden');
+
+            pecasFiltradas.forEach(peca => {
+                grid.innerHTML += `
+                    <div class="card-peca">
+                        <img src="${peca.imagem}" class="card-img" alt="${peca.nome}">
+                        <div class="card-info">
+                            <div class="card-title">${peca.nome}</div>
+                            <div class="card-sub">${peca.cor} • ${peca.categoria} • ${peca.tipo}</div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-black" style="font-size:0.75rem" onclick="excluirPeca(${peca.id})">Excluir</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    }
+</script>
+
+</html>

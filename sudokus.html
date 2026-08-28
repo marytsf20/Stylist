@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Cards</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            height: 100%;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            
+        }
+
+        body {
+            background-color: #fcfbf9;
+            color: #1c1c1e;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .btn {
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid #e5e5ea;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .btn-black {
+            background-color: #1c1c1e;
+            color: #ffffff;
+            border-color: #1c1c1e;
+        }
+
+        .btn-black:hover {
+            background-color: #3a3a3c;
+        }
+
+        .btn-black:disabled {
+            background-color: #e5e5ea;
+            border-color: #e5e5ea;
+            color: #8e8e93;
+            cursor: not-allowed;
+        }
+
+        .btn-link {
+            border: none;
+            background: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        /* Topo da página */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            color: #8e8e93;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .empty-state {
+            background: #ffffff;
+            border: 1px dashed #e5e5ea;
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .empty-icon {
+            font-size: 2.5rem;
+            color: #c7c7cc;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            color: #8e8e93;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .grid-grades {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card-grade {
+            background: #ffffff;
+            border: 1px solid #e5e5ea;
+            border-radius: 12px;
+            padding: 12px;
+            position: relative;
+        }
+
+        .preview-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            height: 180px;
+            background: #f2f2f7;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            padding: 6px;
+        }
+
+        .preview-mini-grid .mini-slot {
+            background: #e5e5ea;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .preview-mini-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .grade-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grade-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .grade-sub {
+            font-size: 0.75rem;
+            color: #8e8e93;
+        }
+
+        .btn-delete {
+            border: none;
+            background: none;
+            color: #c7c7cc;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-delete:hover {
+            color: #ff3b30;
+        }
+
+        /* Layout de Criar Grade (Mesmo padrão da tela de criar Look) */
+        .grade-builder {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 20px;
+        }
+
+        .builder-header {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .input-name {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid #e5e5ea;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        /* Área da Matriz 3x3 no Criador */
+        .matrix-container {
+            background: #ffffff;
+            border: 1px dashed #e5e5ea;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 380px;
+        }
+
+        .grid-3x3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 330px;
+            aspect-ratio: 1;
+        }
+
+        .cell {
+            border: 2px dashed #e5e5ea;
+            border-radius: 8px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .cell.hovered {
+            border-color: #1c1c1e;
+            background: #f9f9fb;
+        }
+
+        .cell .plus-icon {
+            font-size: 1rem;
+            color: #c7c7cc;
+            pointer-events: none;
+        }
+
+        .cell img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-cell-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Sidebar de Peças */
+        .sidebar-pecas {
+            background: #ffffff;
+            border: 1px solid #e5e5ea;
+            border-radius: 12px;
+            padding: 15px;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .sidebar-pecas h4 {
+            font-size: 0.85rem;
+            color: #8e8e93;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .peca-draggable {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border: 1px solid #e5e5ea;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: grab;
+            background: #ffffff;
+        }
+
+        .peca-draggable img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #f2f2f7;
+        }
+
+        .peca-draggable-info {
+            font-size: 0.8rem;
+        }
+
+        .peca-draggable-info div {
+            font-weight: 600;
+        }
+
+        .peca-draggable-info span {
+            color: #8e8e93;
+            font-size: 0.75rem;
+        }
+
+        .bg-gradient-primary {
+            background-color: #000;
+            background-image: linear-gradient(180deg, #000 10%, #000 100%);
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i>☰</i>
+                </div>
+                <div class="sidebar-brand-text mx-3">MENU</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="home.html">
+                    <span>Guarda-roupa</span></a>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item active">
+                <a class="nav-link" href="looks.html">
+                    <span>Looks</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="sudokus.html">
+                    <span>Sudokus</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="info.html">
+                    <span>Mais info</span></a>
+            </li>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group"> STYLIST
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <img class="img-profile rounded-circle" src="https://thumbs.dreamstime.com/b/linha-%C3%ADcone-do-preto-avatar-perfil-de-usu%C3%A1rio-121102131.jpg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container">
+
+                    <!-- TELA 1: LISTA DE GRADES -->
+                    <div id="telaGrades">
+                        <div class="header">
+                            <div>
+                                <h1>Grades 3x3</h1>
+                                <p>Suas matrizes visuais salvas</p>
+                            </div>
+                            <button class="btn btn-black" onclick="abrirCriarGrade()">+ Criar Nova Grade</button>
+                        </div>
+
+                        <div id="gridGrades" class="grid-grades"></div>
+
+                        <div id="emptyStateGrades" class="empty-state">
+                            <div class="empty-icon"><i class="fas fa-th"></i></div>
+                            <p>Nenhuma grade salva ainda.<br>Monte sua primeira matriz visual 3x3 com suas peças.</p>
+                            <button class="btn btn-black" onclick="abrirCriarGrade()">+ Criar Nova Grade</button>
+                        </div>
+                    </div>
+
+                    <!-- TELA 2: CRIAR NOVA GRADE -->
+                    <div id="telaCriarGrade" class="hidden">
+                        <button class="btn-link" onclick="fecharCriarGrade()"><i class="fas fa-arrow-left"></i> Voltar
+                            às grades</button>
+
+                        <h2 style="margin-bottom: 20px;">Criar Nova Grade 3x3</h2>
+
+                        <div class="builder-header">
+                            <input type="text" id="nomeGrade" class="input-name" placeholder="Nome da grade"
+                                oninput="validarFormularioGrade()">
+                            <button id="btnSalvarGrade" class="btn btn-black" onclick="salvarGrade()" disabled><i
+                                    class="fas fa-bookmark"></i> Salvar Grade</button>
+                        </div>
+                        <p style="font-size: 0.75rem; color: #8e8e93; margin-top: -12px; margin-bottom: 20px;">Adicione
+                            ao menos 1 peça na matriz e insira um nome para salvar.</p>
+
+                        <div class="grade-builder">
+                            <!-- Área Visual da Matriz 3x3 -->
+                            <div class="matrix-container">
+                                <div class="grid-3x3" id="grid3x3Builder">
+                                    <!-- 9 células geradas via JS -->
+                                </div>
+                            </div>
+
+                            <!-- Lista Lateral de Peças Disponíveis -->
+                            <div class="sidebar-pecas">
+                                <h4>Peças do armário</h4>
+                                <div id="listaPecasArmario"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="index.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+</body>
+<script>
+    // Dados do LocalStorage
+    let pecasArmario = JSON.parse(localStorage.getItem('minhasPecas')) || [];
+    let gradesSalvas = JSON.parse(localStorage.getItem('minhasGrades')) || [];
+    let matrizGradeAtual = Array(9).fill(null);
+
+    document.addEventListener('DOMContentLoaded', renderizarGrades);
+
+    function abrirCriarGrade() {
+        matrizGradeAtual = Array(9).fill(null);
+        document.getElementById('nomeGrade').value = '';
+        document.getElementById('telaGrades').classList.add('hidden');
+        document.getElementById('telaCriarGrade').classList.remove('hidden');
+
+        renderizarSidebarPecas();
+        renderizarMatrizBuilder();
+        validarFormularioGrade();
+    }
+
+    function fecharCriarGrade() {
+        document.getElementById('telaCriarGrade').classList.add('hidden');
+        document.getElementById('telaGrades').classList.remove('hidden');
+    }
+
+    // Renderiza a lista lateral com as peças do Armário
+    function renderizarSidebarPecas() {
+        const container = document.getElementById('listaPecasArmario');
+        container.innerHTML = '';
+
+        if (pecasArmario.length === 0) {
+            container.innerHTML = '<p style="font-size: 0.8rem; color: #8e8e93;">Nenhuma peça cadastrada.</p>';
+            return;
+        }
+
+        pecasArmario.forEach(peca => {
+            const item = document.createElement('div');
+            item.className = 'peca-draggable';
+            item.draggable = true;
+            item.ondragstart = (e) => e.dataTransfer.setData('text/plain', peca.id);
+
+            // Permite clicar na peça para colocá-la na primeira célula vazia
+            item.onclick = () => {
+                const primeiroVazio = matrizGradeAtual.findIndex(slot => slot === null);
+                if (primeiroVazio !== -1) {
+                    matrizGradeAtual[primeiroVazio] = peca;
+                    renderizarMatrizBuilder();
+                    validarFormularioGrade();
+                }
+            };
+
+            item.innerHTML = `
+                    <img src="${peca.imagem}" alt="${peca.nome}">
+                    <div class="peca-draggable-info">
+                        <div>${peca.nome}</div>
+                        <span>${peca.cor || ''} • ${peca.tipo || ''}</span>
+                    </div>
+                `;
+            container.appendChild(item);
+        });
+    }
+
+    // Renderiza a matriz 3x3 no modo de criação
+    function renderizarMatrizBuilder() {
+        const gridContainer = document.getElementById('grid3x3Builder');
+        gridContainer.innerHTML = '';
+
+        for (let i = 0; i < 9; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+
+            // Eventos de Drag & Drop
+            cell.ondragover = (e) => { e.preventDefault(); cell.classList.add('hovered'); };
+            cell.ondragleave = () => cell.classList.remove('hovered');
+            cell.ondrop = (e) => {
+                e.preventDefault();
+                cell.classList.remove('hovered');
+                const pecaId = e.dataTransfer.getData('text/plain');
+                if (pecaId) {
+                    const peca = pecasArmario.find(p => p.id === Number(pecaId));
+                    if (peca) {
+                        matrizGradeAtual[i] = peca;
+                        renderizarMatrizBuilder();
+                        validarFormularioGrade();
+                    }
+                }
+            };
+
+            const peca = matrizGradeAtual[i];
+            if (peca) {
+                cell.innerHTML = `
+                        <img src="${peca.imagem}" alt="${peca.nome}">
+                        <button class="remove-cell-btn" onclick="removerPecaDaMatriz(${i})"><i class="fas fa-times"></i></button>
+                    `;
+            } else {
+                cell.innerHTML = `<i class="fas fa-plus plus-icon"></i>`;
+            }
+
+            gridContainer.appendChild(cell);
+        }
+    }
+
+    function removerPecaDaMatriz(index) {
+        matrizGradeAtual[index] = null;
+        renderizarMatrizBuilder();
+        validarFormularioGrade();
+    }
+
+    function validarFormularioGrade() {
+        const nome = document.getElementById('nomeGrade').value.trim();
+        const btnSalvar = document.getElementById('btnSalvarGrade');
+        const possuiPecas = matrizGradeAtual.some(slot => slot !== null);
+
+        btnSalvar.disabled = !(nome.length > 0 && possuiPecas);
+    }
+
+    function salvarGrade() {
+        const nome = document.getElementById('nomeGrade').value.trim();
+        if (!nome || !matrizGradeAtual.some(slot => slot !== null)) return;
+
+        const novaGrade = {
+            id: Date.now(),
+            nome: nome,
+            celulas: [...matrizGradeAtual]
+        };
+
+        gradesSalvas.push(novaGrade);
+        localStorage.setItem('minhasGrades', JSON.stringify(gradesSalvas));
+
+        fecharCriarGrade();
+        renderizarGrades();
+    }
+
+    function excluirGrade(id) {
+        gradesSalvas = gradesSalvas.filter(g => g.id !== id);
+        localStorage.setItem('minhasGrades', JSON.stringify(gradesSalvas));
+        renderizarGrades();
+    }
+
+    function renderizarGrades() {
+        const grid = document.getElementById('gridGrades');
+        const emptyState = document.getElementById('emptyStateGrades');
+
+        grid.innerHTML = '';
+
+        if (gradesSalvas.length === 0) {
+            emptyState.classList.remove('hidden');
+            grid.classList.add('hidden');
+        } else {
+            emptyState.classList.add('hidden');
+            grid.classList.remove('hidden');
+
+            gradesSalvas.forEach(grade => {
+                let miniSlotsHTML = '';
+                grade.celulas.forEach(cell => {
+                    if (cell) {
+                        miniSlotsHTML += `<div class="mini-slot"><img src="${cell.imagem}"></div>`;
+                    } else {
+                        miniSlotsHTML += `<div class="mini-slot"></div>`;
+                    }
+                });
+
+                const totalPecas = grade.celulas.filter(c => c !== null).length;
+
+                grid.innerHTML += `
+                        <div class="card-grade">
+                            <div class="preview-mini-grid">
+                                ${miniSlotsHTML}
+                            </div>
+                            <div class="grade-info">
+                                <div>
+                                    <div class="grade-title">${grade.nome}</div>
+                                    <div class="grade-sub">${totalPecas} peças na grade</div>
+                                </div>
+                                <button class="btn-delete" onclick="excluirGrade(${grade.id})"><i class="far fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    `;
+            });
+        }
+    }
+</script>
+
+</html>
